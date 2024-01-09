@@ -4,15 +4,20 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.absolutePadding
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.mobilprogshoppinglist.ui.theme.MobilprogShoppingListTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,10 +29,14 @@ class MainActivity : ComponentActivity() {
         shoppingListView.loadProductsFromDatabase()
         setContent {
             MobilprogShoppingListTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     ShoppingListContent(shoppingListView)
-                }
+            }
+            FloatingActionButton(
+                onClick = {  },
+                modifier = Modifier
+                    .absolutePadding(right = 5.dp)
+            ) {
+                Text("+")
             }
         }
     }
@@ -36,24 +45,37 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ShoppingListContent(shoppingListView: ShoppingListView) {
     Column {
-        // Egyéb felületelemek elhelyezése itt
         shoppingListView.apply {
-            // A ShoppingListView megjelenítése
             LazyColumn {
                 items(products) { product ->
-                    Text(text = "Name: ${product.name}, Quantity: ${product.quantity}")
+                    ProductListItem(product = product)
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    MobilprogShoppingListTheme {
-        // Teszteléshez
-        val shoppingListView = ShoppingListView(context = androidx.activity.ComponentActivity())
-        ShoppingListContent(shoppingListView)
+fun ProductListItem(product: Product) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 8.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Text(
+                text = "${product.name}",
+                style = MaterialTheme.typography.displayMedium
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = "Mennyiség: ${product.quantity}",
+                style = MaterialTheme.typography.displaySmall
+            )
+        }
     }
 }

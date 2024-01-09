@@ -15,6 +15,10 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
             Product(name = "alma", quantity = 3),
             Product(name = "barack", quantity = 5),
             Product(name = "körte", quantity = 3),
+            Product(name = "túró", quantity = 5),
+            Product(name = "alma", quantity = 3),
+            Product(name = "barack", quantity = 5),
+            Product(name = "körte", quantity = 3),
             Product(name = "túró", quantity = 5)
         )
 
