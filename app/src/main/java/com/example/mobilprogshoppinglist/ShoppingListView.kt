@@ -38,6 +38,14 @@ class ShoppingListView(context: Context) : RecyclerView.Adapter<ShoppingListView
         updateProducts(productList)
     }
 
+    fun addProduct(product: Product) {
+        val newProductId = databaseHelper.insertProduct(product)
+        product.id = newProductId.toInt()
+        val updatedList = products.toMutableList().apply { add(product) }
+        updateProducts(updatedList)
+    }
+
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val productNameTextView: TextView = itemView.findViewById(R.id.productNameTextView)
         val productQuantityTextView: TextView = itemView.findViewById(R.id.productQuantityTextView)

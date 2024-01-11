@@ -42,6 +42,16 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         // Upgrade logic
     }
 
+    fun insertProduct(product: Product): Long {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put("name", product.name)
+            put("quantity", product.quantity)
+        }
+        return db.insert("products", null, values)
+    }
+
+
     @SuppressLint("Range")
     fun getAllProducts(): List<Product> {
         val productList = mutableListOf<Product>()
